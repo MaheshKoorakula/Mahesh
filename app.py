@@ -1,3 +1,4 @@
+import os # We need to import os to access the environment variable.
 from flask import Flask
 from flask_restful import Api 
 from flask_jwt import JWT
@@ -7,7 +8,8 @@ from resources.item import Item,ItemList
 from resources.store import Store,StoreList
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','sqlite:///data.db') # In heroku database has been added as the environment variable. An environment variable is something our system/VM keeps track off. 
+# So calling os.environ.get('DATABASE_URL') will fetch us the database url created by heroku and connect to postgres DB.
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # Since we have both Flask-SQLAlchemy and SQLAlchemy each of them has its own personl DB changes tracker.
 # So we deactivate the underlying Flask-SQLAlchemy tracker, so that we can use SQLAlchemy tracker.
 app.config['PROPAGATE_EXCEPTIONS'] = True
