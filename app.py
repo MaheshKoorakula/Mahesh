@@ -14,12 +14,6 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 app.secret_key = 'Mahesh' # Whenever we create a secret key, it has to be long complex.
 api = Api(app)
 
-
-@app.before_first_request
-def create_tables(): # This will execute before the first request can be made and will create all the tables which are required in the script.
-    # Also, by storing the values in the data.db file.
-    db.create_all()
-
 jwt = JWT(app,authenticate,identity) # To JWT we pass our function and both authenticate and identity functions from security file.
 # JWT creates the /auth endpoint.
 
@@ -35,4 +29,4 @@ if __name__ == '__main__': # We write this line to tell python that run the app,
     # and run that file, that will be considered as main file.
     from db import db
     db.init_app(app)
-    app.run(Port=5000,debug=True)
+    app.run(port=5000,debug=True)
